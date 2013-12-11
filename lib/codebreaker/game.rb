@@ -1,11 +1,3 @@
-#---
-# Excerpted from "The RSpec Book",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/achbd for more book information.
-#---
 module Codebreaker
   class Game
 
@@ -20,35 +12,8 @@ module Codebreaker
     end
 
     def guess(guess)
-      @output.puts '+' *exact_match_count(guess) + '-'*number_match_count(guess)
-    end
-
-    def exact_match?(guess, index)
-      guess[index] == @secret[index]
-    end
-
-    def number_match?(guess, index)
-      @secret.include?(guess[index]) && !exact_match?(guess, index)
-    end
-
-    def exact_match_count(guess)
-      exact_match_count = 0
-      (0..3).each do |index|
-        if exact_match?(guess, index)
-          exact_match_count += 1
-        end
-      end
-      exact_match_count
-    end
-
-    def number_match_count(guess)
-      number_match_count = 0
-      (0..3).each do |index|
-        if number_match?(guess, index)
-          number_match_count += 1
-        end
-      end
-      number_match_count
+      marker = Marker.new(@secret, guess)
+      @output.puts '+' *marker.exact_match_count + '-'*marker.number_match_count
     end
 
   end
